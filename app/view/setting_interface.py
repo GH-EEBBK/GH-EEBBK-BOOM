@@ -2,6 +2,7 @@
 from qfluentwidgets import (
     SwitchSettingCard,
     PrimaryPushSettingCard,
+    PushSettingCard,
     ScrollArea,
     ComboBoxSettingCard,
     ExpandLayout,
@@ -13,9 +14,9 @@ from qfluentwidgets import SettingCardGroup as CardGroup
 from qfluentwidgets import InfoBar
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtGui import QDesktopServices, QFont
-from PyQt5.QtWidgets import QWidget, QLabel
+from PyQt5.QtWidgets import QWidget, QLabel, QFileDialog
 
-from ..common.config import cfg, isWin11
+from ..common.config import cfg, isWin11, qconfig
 from ..common.setting import AUTHOR, VERSION, YEAR
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
@@ -76,6 +77,15 @@ class SettingInterface(ScrollArea):
         )
 
         # 应用程序
+        self.softwareGroup = SettingCardGroup("文件路径", self.scrollWidget)
+        self.imgFolderCard = PushSettingCard(
+            "IMG刷机文件",
+            FIF.FOLDER,
+            "IMG刷机文件",
+            qconfig.get(cfg.imgFolderPath),
+            self.softwareGroup,
+        )
+
         self.aboutGroup = SettingCardGroup("关于", self.scrollWidget)
         self.aboutCard = PrimaryPushSettingCard(
             "检查更新",
@@ -117,6 +127,8 @@ class SettingInterface(ScrollArea):
 
         self.updateSoftwareGroup.addSettingCard(self.updateOnStartUpCard)
 
+        self.softwareGroup.addSettingCard(self.imgFolderCard)
+
         self.aboutGroup.addSettingCard(self.aboutCard)
 
         # 将设置卡片组添加到布局中
@@ -124,6 +136,7 @@ class SettingInterface(ScrollArea):
         self.expandLayout.setContentsMargins(36, 10, 36, 0)
         self.expandLayout.addWidget(self.personalGroup)
         self.expandLayout.addWidget(self.updateSoftwareGroup)
+        self.expandLayout.addWidget(self.softwareGroup)
         self.expandLayout.addWidget(self.aboutGroup)
 
     def _showRestartTooltip(self):
@@ -138,5 +151,17 @@ class SettingInterface(ScrollArea):
         cfg.themeChanged.connect(setTheme)
         self.micaCard.checkedChanged.connect(signalBus.micaEnableChanged)
 
+        # 更新文件夹
+        self.imgFolderCard.clicked.connect(self.__onImgFolderCardClicked)
+
         # 检查更新
         self.aboutCard.clicked.connect(signalBus.checkUpdateSig)
+
+    def __onImgFolderCardClicked(self):
+        """download folder card clicked slot"""
+        folder = QFileDialog.getExistingDirectory(self, "选择文件夹", "./")
+        if not folder or cfg.get(cfg.imgFolderPath) == folder:
+            return
+
+        qconfig.set(cfg.imgFolderPath, folder)
+        self.imgFolderCard.setContent(folder)

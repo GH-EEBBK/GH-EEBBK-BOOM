@@ -1,7 +1,7 @@
 # coding:utf-8
 import sys
 from qfluentwidgets import (qconfig, QConfig, ConfigItem, OptionsConfigItem, BoolValidator,
-                            OptionsValidator, Theme)
+                            OptionsValidator, Theme, FolderValidator)
 
 from .setting import CONFIG_FILE
 
@@ -28,6 +28,9 @@ class Config(QConfig):
 
     # software update
     checkUpdateAtStartUp = ConfigItem("Update", "CheckUpdateAtStartUp", True, BoolValidator())
+    
+    # img分区文件存储
+    imgFolderPath = ConfigItem("Software", "ImgFolder", "C:/", FolderValidator())
 
 
 cfg = Config()

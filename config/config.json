@@ -11,8 +11,11 @@
         "DpiScale": "Auto",
         "MicaEnabled": false
     },
+    "Software": {
+        "ImgFolder": "D:/小天才电话手表Z6超级系统恢复_Ver1.4.6/data"
+    },
     "QFluentWidgets": {
-        "ThemeColor": "#ff28afe9",
+        "ThemeColor": "#ff009faa",
         "ThemeMode": "Light"
     }
 }

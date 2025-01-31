@@ -117,23 +117,3 @@ class FlowLayout(QLayout):
         else:
             return 0
 
-
-class Window(QWidget):
-    def __init__(self):
-        super(Window, self).__init__()
-        flowLayout = FlowLayout()
-        for i in range(20):
-            q = QL()
-            q.setText("{1}\n{0}".format(q.minimumHeight(),i))
-            flowLayout.addWidget(q)
-        self.setLayout(flowLayout)
-        self.setWindowTitle("Flow Layout")
-        cols = 6
-        self.resize((100*cols+5*(cols-1)),600)
-
-if __name__ == '__main__':
-    import sys
-    app = QApplication(sys.argv)
-    mainWin = Window()
-    mainWin.show()
-    sys.exit(app.exec_())
