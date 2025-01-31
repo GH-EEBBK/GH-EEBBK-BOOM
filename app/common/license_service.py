@@ -1,5 +1,5 @@
 # coding: utf-8
-import re
+
 import mysql.connector
 from PyQt5.QtCore import QThread, pyqtSignal
 

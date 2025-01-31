@@ -1,9 +1,7 @@
 # coding: utf-8
 
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
 
 from qfluentwidgets import CardWidget, BodyLabel
 

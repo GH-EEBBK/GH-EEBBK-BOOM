@@ -5,13 +5,12 @@ import base64
 import zipfile
 import io
 import subprocess
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QProgressBar, QMessageBox
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QProgressBar, QMessageBox
 from PyQt5.QtCore import Qt
 from loguru import logger
 from qfluentwidgets import SmoothScrollArea, FlowLayout
 
-# from ..components.flow_layout import FlowLayout
 from ..components.disclaimer_card import DisclaimerCard
 from ..components.information_card import ConnectionInformationCard
 from ..components.flash_card import FlashCard
