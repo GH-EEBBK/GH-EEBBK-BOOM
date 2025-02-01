@@ -19,6 +19,7 @@ from qfluentwidgets import (
 )
 
 from ..common.config import qconfig, cfg
+from ..common.has_installed import has_install
 
 
 class FlashCard(HeaderCardWidget):
@@ -45,6 +46,7 @@ class FlashCard(HeaderCardWidget):
         self.process.readyReadStandardError.connect(self.handle_error)
 
         self.__initWidget()
+        self._chechInstall()
 
     def __initWidget(self):
         self.imgListLabel.setText("可刷写的分区")
@@ -101,6 +103,7 @@ class FlashCard(HeaderCardWidget):
         _, fileList = self._loadImgList(qconfig.get(cfg.imgFolderPath))
         self.imgListWidget.clear()
         self.imgListWidget.addItems(fileList)
+        self._chechInstall()
 
     def flash_selected_partitions(self):
         files, fileList = self._loadImgList(qconfig.get(cfg.imgFolderPath))
@@ -205,3 +208,14 @@ class FlashCard(HeaderCardWidget):
             position=InfoBarPosition.TOP_RIGHT,
             parent=self.parent().parent().parent().parent(),
         )
+
+    # 检测QFIL是否安装
+    def _chechInstall(self):
+        exeName = "QFIL.exe"
+        softName = "QPST"
+        if not has_install(softName, m_strCurExecFileName=exeName):
+            self.startButton.setEnabled(False)
+            self.startButton.setToolTip("请先安装QPST")
+        else:
+            self.startButton.setEnabled(True)
+            self.startButton.setToolTip("刷写选中分区")

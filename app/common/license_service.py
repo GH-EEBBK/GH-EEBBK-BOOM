@@ -15,7 +15,11 @@ class LicenseServiceThread(QThread):
     def run(self):
         # 创建数据库连接
         db = mysql.connector.connect(
-            
+            host="mysql2.sqlpub.com",
+            user="	hungry630",
+            password="0PD7wRlWiHBcgZIY",
+            database="database666",
+            port=3307,
         )
 
         cursor = db.cursor()
